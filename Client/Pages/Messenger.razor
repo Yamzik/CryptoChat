@@ -1,8 +1,8 @@
 ﻿@page "/"
 
-<PageTitle>Chat</PageTitle>
+<PageTitle>Messenger</PageTitle>
 
-<h1>Chat</h1>
+<h1>Messenger</h1>
 
 <div>
     <MsgStack @ref=@msgStack />
@@ -50,7 +50,7 @@
         hubConnection.Remove("ReceiveMessage");
         hubConnection.On<string, string>("ReceiveMessage", (userFrom, message) =>
             {
-                msgStack.AddMsg(new Message
+                Message msg = new Message
                     {
                         id = 0,
                         from = userFrom,
@@ -58,15 +58,16 @@
                         to = "me",
                         date = DateTime.Now,
                         route = MsgRoute.income,
-                    });
+                    };
+                msgStack.AddMsg(msg);
             });
     }
     private async void Register()
     {
         if (hubConnection.State == HubConnectionState.Connected)
-            {
-                await hubConnection.SendAsync("Register", nickname);
-            }
+        {
+            await hubConnection.SendAsync("Register", nickname);
+        }
     }
 }
 

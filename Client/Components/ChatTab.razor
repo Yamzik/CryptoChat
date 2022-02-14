@@ -1,0 +1,12 @@
+﻿<div>
+    @for(int i = 0; i < chats.Count; i++)
+    {
+        ChatItem chat = chats[i];
+        <ChatItem chat=chat.chat />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<ChatItem> chats { get; set; } = new List<ChatItem>();
+}

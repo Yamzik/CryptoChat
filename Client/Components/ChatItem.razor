@@ -1,0 +1,11 @@
+﻿<div>
+    <div>@chat.companion.name</div>
+    <div>@chat.messages.Last().text</div>
+    <div>@chat.messages.Last().date</div>
+</div>
+
+@code {
+    [Parameter]
+    public Chat chat { get; set; }
+    public int news;
+}
