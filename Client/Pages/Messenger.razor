@@ -1,0 +1,79 @@
+﻿@page "/"
+
+<PageTitle>Chat</PageTitle>
+
+<h1>Chat</h1>
+
+<div>
+    <MsgStack @ref=@msgStack />
+    <InputMessage @ref=@inputMsg SendCallback="AddOut" />
+    <input @bind-value=@userTo type="text" placeholder="User to" />
+    <div>
+        <input type="text" @bind-value=@nickname />
+        <button @onclick="@Register">Register</button>
+    </div>
+</div>
+
+@code {
+    InputMessage inputMsg = new InputMessage();
+    MsgStack msgStack = new MsgStack();
+    private string nickname = "";
+    private string userTo = "";
+    void AddIn()
+    {
+        msgStack.AddMsg(new Message
+            {
+                id = 0,
+                from = DateTime.Now.ToString(),
+                to = DateTime.Now.ToString(),
+                text = DateTime.Now.ToString(),
+                date = DateTime.Now,
+                route = MsgRoute.income,
+            });
+    }
+    private async void AddOut()
+    {
+
+        await hubConnection.SendAsync("SendMessage", userTo, inputMsg.text, "me");
+        msgStack.AddMsg(new Message
+            {
+                id = 0,
+                from = "me",
+                text = inputMsg.text,
+                to = userTo,
+                date = DateTime.Now,
+                route = MsgRoute.outcome,
+            });
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection.Remove("ReceiveMessage");
+        hubConnection.On<string, string>("ReceiveMessage", (userFrom, message) =>
+            {
+                msgStack.AddMsg(new Message
+                    {
+                        id = 0,
+                        from = userFrom,
+                        text = message,
+                        to = "me",
+                        date = DateTime.Now,
+                        route = MsgRoute.income,
+                    });
+            });
+    }
+    private async void Register()
+    {
+        if (hubConnection.State == HubConnectionState.Connected)
+            {
+                await hubConnection.SendAsync("Register", nickname);
+            }
+    }
+}
+
+<!--/*protected override async Task OnInitializedAsync()
+    {
+        Ws.On("ReceiveMessage", (user, message) =>
+        {
+            Message msg =
+        });
+    }*/-->

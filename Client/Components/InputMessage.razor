@@ -1,0 +1,14 @@
+﻿<div>
+    <input @oninput="UpdateInput" type="text" placeholder="Input message" />
+    <button @onclick="SendCallback">Send message</button>
+</div>
+
+@code {
+    public string text = "";
+    private void UpdateInput (ChangeEventArgs input)
+    {
+        text = input.Value is null ? "" : input.Value.ToString();
+    }
+    [Parameter]
+    public EventCallback<MouseEventArgs> SendCallback { get; set; }
+}

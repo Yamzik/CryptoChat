@@ -1,0 +1,11 @@
+﻿<div>
+    @text
+</div>
+
+@code {
+    [Parameter]
+    public bool isConnected { get; set; }
+    private string text = "Connecting...";
+    [Parameter]
+    public EventCallback<bool> ConnectionChanged { get; set; }
+}

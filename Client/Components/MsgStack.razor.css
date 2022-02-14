@@ -1,0 +1,6 @@
+﻿.msg-stack-wrapper {
+    border: solid;
+    border-color: black;
+    overflow-y: scroll;
+    height: 400px;
+}

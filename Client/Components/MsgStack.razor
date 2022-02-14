@@ -1,0 +1,27 @@
+﻿<div class="msg-stack-wrapper">
+    <div>
+        @for (int i = 0; i < msgs.Count; i++)
+        {
+            MsgBase mes = msgs[i];
+            switch (mes.message.route)
+            {
+                case MsgRoute.income:
+                    <MsgIn @ref=mes message=@mes.message />
+                    break;
+                case MsgRoute.outcome:
+                    <MsgOut @ref=mes message=@mes.message />
+                    break;
+            }
+        }
+    </div>
+</div>
+
+@code {
+    private List<MsgBase> msgs = new List<MsgBase>();
+
+    public void AddMsg(Message msg)
+    {
+        msgs.Add(new MsgBase { message = msg });
+        StateHasChanged();
+    }
+}
