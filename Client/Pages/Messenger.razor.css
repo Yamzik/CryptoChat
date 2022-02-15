@@ -1,0 +1,11 @@
+﻿.root {
+    position: relative;
+}
+.chat-tab {
+    height: 400px;
+    float: left;
+    width: 30%;
+}
+.message-tab {
+    display: inlinel;
+}

@@ -4,9 +4,9 @@
 
 <h1>Messenger</h1>
 
-<div>
-    <MsgStack @ref=@msgStack />
-    <InputMessage @ref=@inputMsg SendCallback="AddOut" />
+<div class="root">
+    <div class="chat-tab"><ChatTab @ref=@chatTab /></div>
+    <div class="message-tab"><MessageTab @ref=@msgTab /></div>
     <input @bind-value=@userTo type="text" placeholder="User to" />
     <div>
         <input type="text" @bind-value=@nickname />
@@ -15,40 +15,14 @@
 </div>
 
 @code {
-    InputMessage inputMsg = new InputMessage();
-    MsgStack msgStack = new MsgStack();
+    public ChatTab chatTab;
+    public MessageTab msgTab;
     private string nickname = "";
     private string userTo = "";
-    void AddIn()
-    {
-        msgStack.AddMsg(new Message
-            {
-                id = 0,
-                from = DateTime.Now.ToString(),
-                to = DateTime.Now.ToString(),
-                text = DateTime.Now.ToString(),
-                date = DateTime.Now,
-                route = MsgRoute.income,
-            });
-    }
-    private async void AddOut()
-    {
-
-        await hubConnection.SendAsync("SendMessage", userTo, inputMsg.text, "me");
-        msgStack.AddMsg(new Message
-            {
-                id = 0,
-                from = "me",
-                text = inputMsg.text,
-                to = userTo,
-                date = DateTime.Now,
-                route = MsgRoute.outcome,
-            });
-    }
     protected override async Task OnInitializedAsync()
     {
         hubConnection.Remove("ReceiveMessage");
-        hubConnection.On<string, string>("ReceiveMessage", (userFrom, message) =>
+        /*hubConnection.On<string, string>("ReceiveMessage", (userFrom, message) =>
             {
                 Message msg = new Message
                     {
@@ -60,7 +34,7 @@
                         route = MsgRoute.income,
                     };
                 msgStack.AddMsg(msg);
-            });
+            });*/
     }
     private async void Register()
     {

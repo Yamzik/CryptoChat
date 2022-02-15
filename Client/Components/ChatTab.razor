@@ -1,12 +1,13 @@
-﻿<div>
-    @for(int i = 0; i < chats.Count; i++)
+﻿<div class="chat-tab-wrapper">
+    @for (int i = 0; i < Global.chats.Count; i++)
     {
-        ChatItem chat = chats[i];
-        <ChatItem chat=chat.chat />
+        Chat chat = Global.chats[i];
+        ChatItem chatItem = new ChatItem() { chat = chat };
+        chats.Add(chatItem);
+        <ChatItem @ref=chatItem chat=chat />
     }
 </div>
 
 @code {
-    [Parameter]
     public List<ChatItem> chats { get; set; } = new List<ChatItem>();
 }

@@ -11,5 +11,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped(sp => new HubConnectionBuilder()
 			.WithUrl(builder.HostEnvironment.BaseAddress + "chathub")
 			.Build());
+builder.Services.AddScoped(sp => new Storage());
 
 await builder.Build().RunAsync();

@@ -1,1 +1,7 @@
-﻿
+﻿.chat-tab-wrapper {
+    border: solid;
+    border-color: black;
+    overflow-y: scroll;
+    border-radius: 5px;
+    height: 400px;
+}

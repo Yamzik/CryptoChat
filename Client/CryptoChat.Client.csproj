@@ -17,6 +17,7 @@
     <None Remove="Components\MsgIn.razor.css" />
     <None Remove="Components\MsgOut.razor.css" />
     <None Remove="Components\MsgStack.razor.css" />
+    <None Remove="Pages\Messenger.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +27,7 @@
     <Content Include="Components\MsgIn.razor.css" />
     <Content Include="Components\MsgOut.razor.css" />
     <Content Include="Components\MsgStack.razor.css" />
+    <Content Include="Pages\Messenger.razor.css" />
   </ItemGroup>
 
   <ItemGroup>

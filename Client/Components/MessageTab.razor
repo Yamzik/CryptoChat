@@ -1,5 +1,36 @@
-﻿<h3>MessageTab</h3>
+﻿<div class="root">
+    <div class="msg-stack">
+        <MsgStack chat=@chat />
+    </div>
+    <div class="input">
+        <InputMessage @ref=@inputMsg SendCallback="@SendMessage" />
+    </div>
+</div>
 
 @code {
+    public InputMessage inputMsg = new InputMessage();
+    public Chat chat;
 
+    private async void SendMessage()
+    {
+        await hubConnection.SendAsync("SendMessage", Global.user.address, inputMsg.text, chat.companion.address);
+        Chat? buffered = Global.chats.FirstOrDefault(x => x.Equals(chat));
+        buffered?.messages.Add(new Message
+            {
+                id = 0,
+                from = Global.user.address,
+                text = inputMsg.text,
+                to = chat.companion.address,
+                date = DateTime.Now,
+                route = MsgRoute.outcome,
+            });
+        Global.InvokeSend();
+    }
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        chat = Global.currentChat;
+    }
 }

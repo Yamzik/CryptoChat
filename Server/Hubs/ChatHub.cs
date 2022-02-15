@@ -7,7 +7,7 @@ namespace CryptoChat.Server.Hubs
     public class ChatHub : Hub
     {
         private static Dictionary<string, IClientProxy> chats = new Dictionary<string, IClientProxy>();
-        public async Task SendMessage(string userTo, string message, string userFrom)
+        public async Task SendMessage(string userFrom, string message, string userTo)
         {
             if(chats.ContainsKey(userTo))
             {

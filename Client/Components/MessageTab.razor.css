@@ -1,5 +1,12 @@
-﻿<h3>MessageTab.razor</h3>
-
-@code {
-
+﻿.root {
+    border: solid;
+    border-color: black;
+    overflow-y: scroll;
+    border-radius: 5px;
+    height: 400px;
+    position:relative;
+}
+.input {
+    position: absolute;
+    bottom: 0;
 }

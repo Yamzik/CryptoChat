@@ -17,7 +17,10 @@
 </div>
 
 @code {
-    private List<MsgBase> msgs = new List<MsgBase>();
+    [Parameter]
+    public List<MsgBase> msgs { get; set; } = new List<MsgBase>();
+    [Parameter]
+    public Chat chat { get; set; } = new Chat();
 
     public void AddMsg(Message msg)
     {
