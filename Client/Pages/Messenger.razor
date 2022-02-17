@@ -6,11 +6,14 @@
 
 <div class="root">
     <div class="chat-tab"><ChatTab @ref=@chatTab /></div>
-    <div class="message-tab"><MessageTab @ref=@msgTab /></div>
+    <div class="message-tab"><MessageTab @ref=@msgTab chat=@Global.currentChat/></div>
     <input @bind-value=@userTo type="text" placeholder="User to" />
     <div>
         <input type="text" @bind-value=@nickname />
-        <button @onclick="@Register">Register</button>
+        <button @onclick="@Login">Login</button>
+    </div>
+    <div>
+        <label>Your address: @address</label>
     </div>
 </div>
 
@@ -19,29 +22,12 @@
     public MessageTab msgTab;
     private string nickname = "";
     private string userTo = "";
-    protected override async Task OnInitializedAsync()
+    private string address = "";
+    public void Login()
     {
-        hubConnection.Remove("ReceiveMessage");
-        /*hubConnection.On<string, string>("ReceiveMessage", (userFrom, message) =>
-            {
-                Message msg = new Message
-                    {
-                        id = 0,
-                        from = userFrom,
-                        text = message,
-                        to = "me",
-                        date = DateTime.Now,
-                        route = MsgRoute.income,
-                    };
-                msgStack.AddMsg(msg);
-            });*/
-    }
-    private async void Register()
-    {
-        if (hubConnection.State == HubConnectionState.Connected)
-        {
-            await hubConnection.SendAsync("Register", nickname);
-        }
+        address = Nethereum.Signer.EthECKey.GenerateKey().GetPublicAddress();
+        User usr = new User { id = 0, address = address, name = nickname };
+        Global.Init(usr);
     }
 }
 

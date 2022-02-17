@@ -1,1 +1,9 @@
-﻿
+﻿.chat-item-wrapper {
+    border: solid;
+    border-color: black;
+    
+}
+
+.chat-item-wrapper:hover {
+    cursor: pointer;
+}

@@ -1,6 +1,6 @@
 ﻿<div class="root">
     <div class="msg-stack">
-        <MsgStack chat=@chat />
+        <MsgStack @ref=@msgStack />
     </div>
     <div class="input">
         <InputMessage @ref=@inputMsg SendCallback="@SendMessage" />
@@ -9,13 +9,13 @@
 
 @code {
     public InputMessage inputMsg = new InputMessage();
-    public Chat chat;
+    public MsgStack msgStack = new MsgStack();
+    [Parameter]
+    public Chat chat { get; set; }
 
-    private async void SendMessage()
+    private void SendMessage(string text)
     {
-        await hubConnection.SendAsync("SendMessage", Global.user.address, inputMsg.text, chat.companion.address);
-        Chat? buffered = Global.chats.FirstOrDefault(x => x.Equals(chat));
-        buffered?.messages.Add(new Message
+        Global.InvokeOnMessageSent(new Message
             {
                 id = 0,
                 from = Global.user.address,
@@ -24,13 +24,9 @@
                 date = DateTime.Now,
                 route = MsgRoute.outcome,
             });
-        Global.InvokeSend();
     }
-}
-
-@code {
     protected override void OnInitialized()
     {
-        chat = Global.currentChat;
+        Global.OnChatClicked += (_chat) => { chat = _chat; StateHasChanged(); };
     }
 }

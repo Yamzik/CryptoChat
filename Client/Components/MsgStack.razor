@@ -1,8 +1,20 @@
 ﻿<div class="msg-stack-wrapper">
+    @if (chat != null &&
+    chat.companion != null &&
+    chat.companion.address != "")
+    {
+        <div>@chat?.companion?.address</div>
+    }
+    else
+    {
+        <div>no dialogue yet</div>
+    }
     <div>
-        @for (int i = 0; i < msgs.Count; i++)
+        @for (int i = 0; i < Global.currentChat.messages.Count; i++)
         {
-            MsgBase mes = msgs[i];
+            Message msg = Global.currentChat.messages[i];
+            MsgBase mes = new MsgBase { message = msg };
+            msgs.Add(mes);
             switch (mes.message.route)
             {
                 case MsgRoute.income:
@@ -17,14 +29,12 @@
 </div>
 
 @code {
-    [Parameter]
     public List<MsgBase> msgs { get; set; } = new List<MsgBase>();
-    [Parameter]
-    public Chat chat { get; set; } = new Chat();
-
-    public void AddMsg(Message msg)
+    public Chat chat;
+    protected override void OnInitialized()
     {
-        msgs.Add(new MsgBase { message = msg });
-        StateHasChanged();
+        Global.OnMessageSent += (message) => StateHasChanged();
+        Global.OnChatClicked += (_chat) => { chat = _chat; StateHasChanged(); };
+        Global.OnMessageReceived += (ch, msg) => { if(ch.companion.address == chat.companion.address) StateHasChanged(); };
     }
 }

@@ -16,6 +16,7 @@ namespace CryptoChat.Shared.Models
 		public string text { get; set; } = "";
 		public DateTime date { get; set; }
 		public MsgRoute route { get; set; }
+		public bool is_read { get; set; } = true;
 	}
 
 	public enum MsgRoute

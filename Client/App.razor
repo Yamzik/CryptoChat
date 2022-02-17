@@ -12,13 +12,3 @@
         </LayoutView>
     </NotFound>
 </Router>
-
-@code {
-    protected override async void OnInitialized()
-    {
-        if (hubConnection.State == HubConnectionState.Disconnected)
-        {
-            await hubConnection.StartAsync();
-        }
-    }
-}

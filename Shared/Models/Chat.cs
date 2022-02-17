@@ -8,7 +8,7 @@ namespace CryptoChat.Shared.Models
 {
 	public class Chat
 	{
-		public List<Message> messages { get; set; }
-		public User companion { get; set; }
+		public List<Message> messages { get; set; } = new List<Message> { };
+		public User companion { get; set; } = new User();
 	}
 }

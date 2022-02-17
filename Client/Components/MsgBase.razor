@@ -1,4 +1,9 @@
 ﻿@code {
     [Parameter]
     public Message message { get; set; }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender) 
+        message.is_read = true;
+    }
 }

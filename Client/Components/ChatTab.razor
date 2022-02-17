@@ -1,13 +1,39 @@
 ﻿<div class="chat-tab-wrapper">
+    <div>
+        <input type="text" @bind-value=@findtext placeholder="Find chat" />
+        <button @onclick="@Find">Search</button>
+    </div>
+
     @for (int i = 0; i < Global.chats.Count; i++)
     {
-        Chat chat = Global.chats[i];
-        ChatItem chatItem = new ChatItem() { chat = chat };
+        Chat ch = Global.chats[i];
+        ChatItem chatItem = new ChatItem { chat = ch };
         chats.Add(chatItem);
-        <ChatItem @ref=chatItem chat=chat />
+        <ChatItem @ref=chatItem chat=chatItem.chat />
     }
 </div>
 
 @code {
     public List<ChatItem> chats { get; set; } = new List<ChatItem>();
+
+    string findtext = "";
+
+    protected override void OnInitialized()
+    {
+        chats = Global.chats.Select(x => new ChatItem { chat = x }).ToList();
+
+        Global.OnMessageReceived += (ch, msg) => { StateHasChanged(); };
+
+        Global.OnInit += (currentUser) =>
+        {
+            var sub = Global.hub.On<User>("GetChat", (user) =>
+                {
+                    if (user == null) return;
+                    Chat ch = new Chat { companion = user, messages = new List<Message>() };
+                    Global.chats.Add(ch);
+                    StateHasChanged();
+                });
+        };
+    }
+    async void Find() => await Global.hub.SendAsync("GetChat", findtext);
 }

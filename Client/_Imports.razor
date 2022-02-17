@@ -13,7 +13,10 @@
 @using CryptoChat.Client.Components
 @using Microsoft.AspNetCore.SignalR.Client
 @using Newtonsoft.Json
+@using Nethereum.Web3
+@using Nethereum.Signer
+@using Nethereum.Web3
 @inject IJSRuntime JS
 @inject HttpClient Http
-@inject HubConnection hubConnection
 @inject Storage Global
+@inject Web3 web3

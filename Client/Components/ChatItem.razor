@@ -1,11 +1,30 @@
-﻿<div>
+﻿<div @onclick="@OpenChat" style="background-color: @backgroundColor" class="chat-item-wrapper">
     <div>@chat.companion.name</div>
-    <div>@chat.messages.Last().text</div>
-    <div>@chat.messages.Last().date</div>
+    @if (chat.messages.Count > 0 && chat.messages.Last() != null)
+    {
+        <div>@chat.messages.Last().text</div>
+        <div>@chat.messages.Last().date</div>
+    }
+    else {<div>No messages yet</div>}
 </div>
 
 @code {
     [Parameter]
     public Chat chat { get; set; }
     public int news;
+    public string backgroundColor { get; set; } = "#ffffff";
+    public string newMsg = "#b3ffc9";
+    public string justMsg = "#ffffff";
+
+    void OpenChat()
+    {
+        backgroundColor = justMsg;
+        Global.InvokeOnChatClicked(chat);
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (chat.messages.Any(x => !x.is_read))
+            backgroundColor = newMsg;
+    }
 }
