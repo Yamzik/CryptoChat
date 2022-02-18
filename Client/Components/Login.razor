@@ -1,0 +1,41 @@
+﻿<div class="login-wrapper @display">
+    <div class="login-content">
+        <div class="input-wrapper">
+            <InputWithButton @ref=@iwb placeholder="Write your name..." @onclick="@OnLogin" ButtonText="Login" />
+        </div>
+        <div class="info">
+            <label>Your address: @address</label>
+        </div>
+        <div class="done-button" @onclick="@Close">
+            <div class="done-button-text">Done</div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public InputWithButton iwb = new InputWithButton();
+    string address = "";
+
+    string display = "hidden";
+    string hidden = "hidden";
+    string shown = "block";
+
+    public void Open()
+    {
+        display = shown;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        display = hidden;
+        StateHasChanged();
+    }
+
+    public void OnLogin()
+    {
+        address = Nethereum.Signer.EthECKey.GenerateKey().GetPublicAddress();
+        User usr = new User { id = 0, address = address, name = iwb.text };
+        Global.Init(usr);
+    }
+}

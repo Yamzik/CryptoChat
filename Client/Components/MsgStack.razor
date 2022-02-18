@@ -1,15 +1,19 @@
 ﻿<div class="msg-stack-wrapper">
-    @if (chat != null &&
-    chat.companion != null &&
-    chat.companion.address != "")
-    {
-        <div>@chat?.companion?.address</div>
-    }
-    else
-    {
-        <div>no dialogue yet</div>
-    }
-    <div>
+    <div class="companion-wrapper">
+        <div class="btn-back hidden" @onclick="@Close"><SvgBack /></div>
+        <div class="avatar-wrapper"><img class="avatar" src=@avatar /></div>
+        @if (chat != null &&
+        chat.companion != null &&
+        chat.companion.address != "")
+        {
+            <div class="chat-title">@(chat?.companion?.address.Substring(0, 6) + "...")</div>
+        }
+        else
+        {
+            <div class="chat-title">no dialogue yet</div>
+        }
+    </div>
+    <div class="messages">
         @for (int i = 0; i < Global.currentChat.messages.Count; i++)
         {
             Message msg = Global.currentChat.messages[i];
@@ -31,10 +35,12 @@
 @code {
     public List<MsgBase> msgs { get; set; } = new List<MsgBase>();
     public Chat chat;
+    string avatar = "";
     protected override void OnInitialized()
     {
         Global.OnMessageSent += (message) => StateHasChanged();
-        Global.OnChatClicked += (_chat) => { chat = _chat; StateHasChanged(); };
-        Global.OnMessageReceived += (ch, msg) => { if(ch.companion.address == chat.companion.address) StateHasChanged(); };
+        Global.OnChatClicked += (_chat, _avatar) => { chat = _chat; avatar = _avatar; StateHasChanged(); };
+        Global.OnMessageReceived += (ch, msg) => { if (ch.companion.address == chat.companion.address) StateHasChanged(); };
     }
+    public void Close() => Chatter.InvokeClosed();
 }

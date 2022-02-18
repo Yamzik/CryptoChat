@@ -2,9 +2,9 @@
   "name": "CryptoChat",
   "short_name": "CryptoChat",
   "start_url": "./",
-  "display": "fullscreen",
-  "background_color": "#ffffff",
-  "theme_color": "#03173d",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#03173D",
   "prefer_related_applications": false,
   "icons": [
     {

@@ -1,40 +1,27 @@
 ﻿@page "/"
 
 <PageTitle>Messenger</PageTitle>
-
-<h1>Messenger</h1>
-
+<div><Login @ref=@login /></div>
 <div class="root">
-    <div class="chat-tab"><ChatTab @ref=@chatTab /></div>
-    <div class="message-tab"><MessageTab @ref=@msgTab chat=@Global.currentChat/></div>
-    <input @bind-value=@userTo type="text" placeholder="User to" />
-    <div>
-        <input type="text" @bind-value=@nickname />
-        <button @onclick="@Login">Login</button>
-    </div>
-    <div>
-        <label>Your address: @address</label>
-    </div>
+    <div class="chat-tab mobile @chatResp"><ChatTab @ref=@chatTab /></div>
+    <div class="message-tab mobile @msgResp"><MessageTab @ref=@msgTab chat=@Global.currentChat /></div>
 </div>
 
 @code {
     public ChatTab chatTab;
     public MessageTab msgTab;
-    private string nickname = "";
-    private string userTo = "";
-    private string address = "";
-    public void Login()
+    public InputWithButton iwb = new InputWithButton();
+    public Login login = new Login();
+
+    public string chatResp = "";
+    public string msgResp = "hidden";
+    public string hidden = "hidden";
+    public string shown = "shown";
+
+    protected override void OnInitialized()
     {
-        address = Nethereum.Signer.EthECKey.GenerateKey().GetPublicAddress();
-        User usr = new User { id = 0, address = address, name = nickname };
-        Global.Init(usr);
+        Chatter.OnChatClosed += () => { chatResp = shown; msgResp = hidden; StateHasChanged(); };
+        Global.OnChatClicked += (_chat, avatar) => { chatResp = hidden; msgResp = shown; StateHasChanged(); };
+        Global.OnProfileClick += () => { login.Open(); };
     }
 }
-
-<!--/*protected override async Task OnInitializedAsync()
-    {
-        Ws.On("ReceiveMessage", (user, message) =>
-        {
-            Message msg =
-        });
-    }*/-->

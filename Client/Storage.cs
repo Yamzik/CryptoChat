@@ -10,14 +10,15 @@ namespace CryptoChat.Client
 		public User user { get; set; } = new User();
 		public Chat currentChat { get; set; } = new Chat();
 
+		public event Action OnProfileClick;
 		public event Action<Message> OnMessageSent;
 		public event Action<Chat, Message> OnMessageReceived;
 		public event Action<User> OnInit;
-		public event Action<Chat> OnChatClicked;
-		public void InvokeOnChatClicked(Chat chat)
+		public event Action<Chat, string> OnChatClicked;
+		public void InvokeOnChatClicked(Chat chat, string avatar)
 		{
 			currentChat = chat;
-			OnChatClicked.Invoke(chat);
+			OnChatClicked.Invoke(chat, avatar);
 		}
 		public async void InvokeOnMessageSent(Message message)
 		{
@@ -25,6 +26,7 @@ namespace CryptoChat.Client
 			currentChat.messages.Add(message);
 			OnMessageSent.Invoke(message);
 		}
+		public void InvokeOnProfileClick() => OnProfileClick.Invoke();
 
 		public HubConnection hub;
 

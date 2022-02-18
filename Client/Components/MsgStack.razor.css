@@ -1,3 +1,55 @@
 ﻿.msg-stack-wrapper {
-    
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #606D72
+}
+
+.companion-wrapper {
+    position: relative;
+    height: 10%;
+    width: 100%;
+    display: block;
+    background-color: #272634;
+}
+
+
+.messages {
+    position: relative;
+    overflow-y: auto;
+    width: 100%;
+    height: 90%;
+}
+
+.btn-back {
+    position: relative;
+    float: left;
+    margin-top: 15px;
+    margin-left: 15px;
+    width: 10%;
+    display: inline-block;
+    float: left;
+}
+
+.chat-title {
+    height: 100%;
+    position: relative;
+    display: flex;
+    margin-left: 20px;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.avatar-wrapper {
+    display: none;
+    align-content: center;
+}
+
+@media screen and (max-width: 800px) {
+    .hidden {
+        display: inline-block;
+    }
 }

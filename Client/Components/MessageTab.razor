@@ -1,32 +1,34 @@
-﻿<div class="root">
+﻿<div class="message-tab-wrapper">
     <div class="msg-stack">
         <MsgStack @ref=@msgStack />
     </div>
     <div class="input">
-        <InputMessage @ref=@inputMsg SendCallback="@SendMessage" />
+        <InputWithButton @ref=@iwb placeholder="Write a message..." @onclick="@SendMessage" ButtonText="Send" />
     </div>
 </div>
 
 @code {
+    public InputWithButton iwb = new InputWithButton();
     public InputMessage inputMsg = new InputMessage();
     public MsgStack msgStack = new MsgStack();
     [Parameter]
     public Chat chat { get; set; }
 
-    private void SendMessage(string text)
+    protected override void OnInitialized()
+    {
+        Global.OnChatClicked += (_chat, avatar) => { chat = _chat; StateHasChanged(); };
+    }
+    public void SendMessage()
     {
         Global.InvokeOnMessageSent(new Message
             {
                 id = 0,
                 from = Global.user.address,
-                text = inputMsg.text,
+                text = iwb.text,
                 to = chat.companion.address,
                 date = DateTime.Now,
                 route = MsgRoute.outcome,
             });
-    }
-    protected override void OnInitialized()
-    {
-        Global.OnChatClicked += (_chat) => { chat = _chat; StateHasChanged(); };
+        iwb.value = "";
     }
 }

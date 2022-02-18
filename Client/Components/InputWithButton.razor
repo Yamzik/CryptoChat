@@ -1,0 +1,33 @@
+﻿<div class="wrapper">
+    <div class="input-wrapper">
+        <input placeholder=@placeholder @oninput="@UpdateText" @bind-value=@value class="input" />
+    </div>
+    <div class="button" @onclick="@OnClick">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="arrow" viewBox="0 0 16 16">
+            <SendBtn />
+        </svg>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string placeholder { get; set; } = "";
+    [Parameter]
+    public string ButtonText { get; set; } = "";
+    [Parameter]
+    public EventCallback<MouseEventArgs> onclick { get; set; }
+    [Parameter]
+    public EventCallback<string> textChanged { get; set; }
+
+    public string value = "";
+
+    public string text { get; set; } = "";
+
+
+    void UpdateText(ChangeEventArgs arg)
+    {
+        text = arg.Value.ToString();
+        textChanged.InvokeAsync(text);
+        StateHasChanged();
+    }
+    void OnClick() => onclick.InvokeAsync();
+}

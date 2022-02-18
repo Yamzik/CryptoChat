@@ -1,8 +1,13 @@
 ﻿.msg-out-wrapper {
-    border: solid;
-    border-color: #00ff90;
+    color: white;
     width: 200px;
+    max-width: 300px;
     margin-left: auto;
-    margin-right: 0;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     border-radius: 10px;
+    background-color: #00544F;
+    padding: 10px;
+    overflow-wrap: break-word;
 }

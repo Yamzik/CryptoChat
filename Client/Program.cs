@@ -14,5 +14,6 @@ builder.Services.AddScoped(sp => new HubConnectionBuilder()
 			.Build());
 builder.Services.AddScoped(sp => new Storage(builder.HostEnvironment.BaseAddress + "chathub"));
 builder.Services.AddScoped(sp => new Web3());
+builder.Services.AddScoped(sp => new MobileChatSwap());
 
 await builder.Build().RunAsync();

@@ -8,25 +8,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\arrow-left-bold-svgrepo-com.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Components\ChatComponent.razor.css" />
     <None Remove="Components\ChatItem.razor.css" />
     <None Remove="Components\ChatWindow.razor.css" />
     <None Remove="Components\InputMessage.razor.css" />
+    <None Remove="Components\Login.razor.css" />
     <None Remove="Components\MessageTab.razor.css" />
     <None Remove="Components\MsgIn - Копировать.razor.css" />
     <None Remove="Components\MsgIn.razor.css" />
     <None Remove="Components\MsgOut.razor.css" />
     <None Remove="Components\MsgStack.razor.css" />
+    <None Remove="Components\SVG\SvgBack.razor.css" />
     <None Remove="Pages\Messenger.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Components\ChatItem.razor.css" />
     <Content Include="Components\InputMessage.razor.css" />
+    <Content Include="Components\Login.razor.css" />
     <Content Include="Components\MessageTab.razor.css" />
     <Content Include="Components\MsgIn.razor.css" />
     <Content Include="Components\MsgOut.razor.css" />
     <Content Include="Components\MsgStack.razor.css" />
+    <Content Include="Components\SVG\SvgBack.razor.css" />
     <Content Include="Pages\Messenger.razor.css" />
   </ItemGroup>
 

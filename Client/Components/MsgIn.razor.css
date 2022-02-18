@@ -1,6 +1,16 @@
 ﻿.msg-in-wrapper {
-    border-radius: 10px;
-    border: solid;
-    border-color: #0094ff;
+    background-color: #010025;
+    color: white;
     width: 200px;
+    max-width: 300px;
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-wrap: break-word;
+}
+
+.time {
+
 }
